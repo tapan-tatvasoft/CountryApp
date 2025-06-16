@@ -2,31 +2,27 @@
 //  CountryAppApp.swift
 //  CountryApp
 //
-//  Created by Torinit on 16/06/25.
+//  Created by Tapan on 16/06/25.
 //
 
 import SwiftUI
-import SwiftData
+import SDWebImageSVGCoder
+import SDWebImage
 
 @main
 struct CountryAppApp: App {
-    var sharedModelContainer: ModelContainer = {
-        let schema = Schema([
-            Item.self,
-        ])
-        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
-
-        do {
-            return try ModelContainer(for: schema, configurations: [modelConfiguration])
-        } catch {
-            fatalError("Could not create ModelContainer: \(error)")
-        }
-    }()
-
+    @StateObject private var viewModel = CountryListViewModel(apiService: APIManager())
+    
+    init() {
+        let SVGCoder = SDImageSVGCoder.shared
+        SDImageCodersManager.shared.addCoder(SVGCoder)
+    }
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            NavigationStack {
+                CountryListview(viewModel: viewModel)
+            }
         }
-        .modelContainer(sharedModelContainer)
     }
 }
