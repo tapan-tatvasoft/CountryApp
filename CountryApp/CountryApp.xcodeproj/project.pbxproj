@@ -6,11 +6,6 @@
 	objectVersion = 77;
 	objects = {
 
-/* Begin PBXBuildFile section */
-		EAE67F322E006BC400A50511 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = EAE67F312E006BC400A50511 /* SDWebImageSwiftUI */; };
-		EAE67F352E006BDE00A50511 /* SDWebImageSVGCoder in Frameworks */ = {isa = PBXBuildFile; productRef = EAE67F342E006BDE00A50511 /* SDWebImageSVGCoder */; };
-/* End PBXBuildFile section */
-
 /* Begin PBXContainerItemProxy section */
 		EAE67D882E00211700A50511 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -57,8 +52,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EAE67F322E006BC400A50511 /* SDWebImageSwiftUI in Frameworks */,
-				EAE67F352E006BDE00A50511 /* SDWebImageSVGCoder in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -119,8 +112,6 @@
 			);
 			name = CountryApp;
 			packageProductDependencies = (
-				EAE67F312E006BC400A50511 /* SDWebImageSwiftUI */,
-				EAE67F342E006BDE00A50511 /* SDWebImageSVGCoder */,
 			);
 			productName = CountryApp;
 			productReference = EAE67D782E00211500A50511 /* CountryApp.app */;
@@ -204,10 +195,6 @@
 			);
 			mainGroup = EAE67D6F2E00211500A50511;
 			minimizedProjectReferenceProxies = 1;
-			packageReferences = (
-				EAE67F302E006BC400A50511 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
-				EAE67F332E006BDE00A50511 /* XCRemoteSwiftPackageReference "SDWebImageSVGCoder" */,
-			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = EAE67D792E00211500A50511 /* Products */;
 			projectDirPath = "";
@@ -563,38 +550,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		EAE67F302E006BC400A50511 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SDWebImage/SDWebImageSwiftUI.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 3.1.3;
-			};
-		};
-		EAE67F332E006BDE00A50511 /* XCRemoteSwiftPackageReference "SDWebImageSVGCoder" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SDWebImage/SDWebImageSVGCoder";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.8.0;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		EAE67F312E006BC400A50511 /* SDWebImageSwiftUI */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = EAE67F302E006BC400A50511 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
-			productName = SDWebImageSwiftUI;
-		};
-		EAE67F342E006BDE00A50511 /* SDWebImageSVGCoder */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = EAE67F332E006BDE00A50511 /* XCRemoteSwiftPackageReference "SDWebImageSVGCoder" */;
-			productName = SDWebImageSVGCoder;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = EAE67D702E00211500A50511 /* Project object */;
 }
