@@ -63,18 +63,12 @@ extension CountryDetailView {
         VStack(spacing: ConstantsValue.zeroSpacing) {
             // MARK: Header
        //     headerView
-            // MARK: - Country flag view
-            if let url = URL(string: country.bestFlagURL ?? "") {
-                CachedAsyncImageView(url: url)
-                    .frame(width: 64, height: 32)
-                    .clipShape(RoundedRectangle(cornerRadius: 4))
-                    .shadow(color: Color.black.opacity(0.15), radius: 3, x: 0, y: 2)
-            } else {
-                Image(systemName: "photo")
-                    .resizable()
-                    .frame(width: 64, height: 32)
-            }
-            // MARK: - Country Info
+            WebImageView(
+                urlString: country.bestFlagURL,
+                placeholderImageName: "photo",
+                width: 200,
+                height: 100
+            )
             countryInfoView
             Spacer()
         }

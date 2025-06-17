@@ -8,6 +8,9 @@
 import SwiftUI
 import SDWebImageSwiftUI
 
+import SwiftUI
+import SDWebImageSwiftUI
+
 struct WebImageView: View {
     let urlString: String?
     let placeholderImageName: String
@@ -15,14 +18,25 @@ struct WebImageView: View {
     let height: CGFloat
 
     var body: some View {
-        if let url = URL(string: urlString ?? "") {
+        if let urlString = urlString,
+           let encoded = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
+           let url = URL(string: encoded) {
+
             WebImage(url: url)
                 .resizable()
-                .indicator(.activity) // ✅ loading spinner
-                .transition(.fade(duration: 0.25))
+                .indicator(SDWebImageSwiftUI.Indicator.activity)
+                .transition(.fade(duration: 0.3))
                 .scaledToFit()
                 .frame(width: width, height: height)
                 .clipped()
+                .background(
+                    Image(systemName: placeholderImageName)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: width, height: height)
+                        .opacity(0.3)
+                )
+
         } else {
             Image(systemName: placeholderImageName)
                 .resizable()

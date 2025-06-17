@@ -18,22 +18,10 @@ struct CountryListContent: View {
             
             WebImageView(
                 urlString: country.bestFlagURL,
-                placeholderImageName: "photo", // SF Symbol or asset
+                placeholderImageName: "photo",
                 width: 64,
                 height: 32
             )
-            
-            
-//            if let url = URL(string: country.bestFlagURL ?? "") {
-//                CachedAsyncImageView(url: url)
-//                    .frame(width: 64, height: 32)
-//                    .clipShape(RoundedRectangle(cornerRadius: 4))
-//                    .shadow(color: Color.black.opacity(0.15), radius: 3, x: 0, y: 2)
-//            } else {
-//                Image(systemName: "photo")
-//                    .resizable()
-//                    .frame(width: 64, height: 32)
-//            }
             
             Text(country.name.common)
                 .font(.headline)
@@ -47,7 +35,7 @@ struct CountryListContent: View {
                     Image(systemName: "trash")
                     .foregroundColor(.red)
                 } else if showAddButton {
-                    Text("✓ Added")
+                    Text("✓")
                     .foregroundColor(.gray)
                 } else {
                     Image(systemName: "plus.circle.fill")
@@ -60,5 +48,7 @@ struct CountryListContent: View {
             
         }
         .padding(.horizontal)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .contentShape(Rectangle())
     }
 }

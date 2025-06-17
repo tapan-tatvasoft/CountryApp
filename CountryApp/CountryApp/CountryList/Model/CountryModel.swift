@@ -12,8 +12,9 @@ struct Country: Codable, Identifiable {
     let flags: Flags?
     let flag: String?
     let currencies: [String: Currency]?
+    let countryCode: String
+    
     var bestFlagURL: String? {
-        
         
         if let svg = flags?.svg, !svg.isEmpty {
             return svg
@@ -30,6 +31,7 @@ struct Country: Codable, Identifiable {
     enum CodingKeys: String, CodingKey {
         case id = "cca3"
         case name, capital, flags, flag, currencies
+        case countryCode = "cca2"
     }
 }
 
