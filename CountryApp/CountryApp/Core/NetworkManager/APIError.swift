@@ -18,17 +18,20 @@ enum APIError: Error, LocalizedError {
     var errorDescription: String? {
         switch self {
         case .invalidURL:
-            return "Invalid URL."
+            return localizeString("Invalid URL")
         case .invalidResponse:
-            return "Invalid response from server."
+            return localizeString("invalidResponse")
         case .decodingFailed:
-            return "Unable to decode the response."
+            return localizeString("decodingError")
         case .serverError(let code, let message):
-            return "Server error (\(code)): \(message ?? "Unknown error")"
+            if code == 404 {
+                return localizeString("dataNotFound")
+            }
+            return "\(localizeString("serverError")), (\(code): \(message ?? localizeString("unknownError")))"
         case .network(let error):
             return error.localizedDescription
         case .unknown:
-            return "Unknown error."
+            return localizeString("unknownError")
         }
     }
 }

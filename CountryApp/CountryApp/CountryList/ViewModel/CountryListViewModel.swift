@@ -5,23 +5,45 @@
 //  Created by Tapan on 16/06/25.
 //
 
-import Foundation
+import SwiftUI
+import SwiftData
 import Combine
 
 @MainActor
-class CountryListViewModel: ObservableObject {
-    @Published var countries: [Country] = []               // User-added countries
-    @Published var searchText: String = ""
-    @Published var searchResults: [Country] = []
-    @Published var isLoading: Bool = false
-    @Published var errorMessage: String? = nil
-
-    private var cancellables = Set<AnyCancellable>()
+final class CountryListViewModel: ObservableObject {
     private let apiService: APIService
+    private var cancellables = Set<AnyCancellable>()
 
-    init(apiService: APIService = APIManager.shared) {
+    @Published var countries: [Country] = []
+    @Published var searchResults: [Country] = []
+    @Published var searchText: String = ""
+    @Published var isLoading = false
+    @Published var errorMessage: String?
+
+    var locationCountryCode: String?
+    private var modelContext: ModelContext?
+
+    init(apiService: APIService = APIManager.shared, locationManager: LocationProviding) {
         self.apiService = apiService
+
+        // Location integration
+        locationManager.currentCountryCodePublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] code in
+                guard let self, let code else { return }
+                self.locationCountryCode = code
+                Task {
+                    await self.selectInitialCountry(with: code, countryName: locationManager.countryName)
+                }
+            }
+            .store(in: &cancellables)
+
         setupSearchBinding()
+    }
+
+    func setContext(_ context: ModelContext) {
+        self.modelContext = context
+        loadStoredCountries()
     }
 
     private func setupSearchBinding() {
@@ -29,7 +51,7 @@ class CountryListViewModel: ObservableObject {
             .debounce(for: .milliseconds(300), scheduler: DispatchQueue.main)
             .removeDuplicates()
             .sink { [weak self] text in
-                guard let self = self else { return }
+                guard let self else { return }
                 Task {
                     await self.fetchCountries()
                 }
@@ -37,32 +59,82 @@ class CountryListViewModel: ObservableObject {
             .store(in: &cancellables)
     }
 
-    func fetchCountries() async {
+    // API Call
+    func fetchCountries(countryName: String? = nil) async {
         guard !isLoading else { return }
-        guard !searchText.isEmpty else {
-            searchResults = []
+        guard !(countryName ?? searchText).isEmpty else {
+            self.searchResults = []
             return
         }
-        isLoading = true
-        errorMessage = nil
+
+        self.isLoading = true
+        self.errorMessage = nil
+
         do {
-            let request = try CouontryListAPI.getCountries(searchName: searchText)
+            let request = try CouontryListAPI.getCountries(searchName: countryName ?? searchText)
             let countryListResponse = try await apiService.execute(request)
             self.searchResults = countryListResponse
         } catch {
             self.errorMessage = error.localizedDescription
             self.searchResults = []
         }
-        isLoading = false
+
+        self.isLoading = false
+    }
+
+    func selectInitialCountry(with code: String, countryName: String?) async {
+        // If already in saved countries, no need to fetch
+        if countries.contains(where: { $0.countryCode == code }) {
+            return
+        }
+        
+        await fetchCountries(countryName: countryName)
+        
+        if let match = searchResults.first(where: { $0.countryCode == code || $0.name.common == countryName }) {
+            addCountry(match)
+        }
+        
     }
 
     func addCountry(_ country: Country) {
-        guard !countries.contains(where: { $0.id == country.id }),
-              countries.count < 5 else { return }
-        countries.append(country)
+        guard let context = modelContext else { return }
+        let entity = CDCountry(model: country)
+        context.insert(entity)
+
+        do {
+            try context.save()
+            loadStoredCountries()
+        } catch {
+            print("Failed to save country: \(error.localizedDescription)")
+        }
     }
 
-    func removeCountry(at indexSet: IndexSet) {
-        countries.remove(atOffsets: indexSet)
+    func removeCountry(at offsets: IndexSet) {
+        guard let context = modelContext else { return }
+
+        for index in offsets {
+            let country = countries[index]
+            let fetch = FetchDescriptor<CDCountry>(predicate: #Predicate { $0.id == country.id })
+
+            if let toDelete = try? context.fetch(fetch).first {
+                context.delete(toDelete)
+            }
+        }
+
+        do {
+            try context.save()
+            loadStoredCountries()
+        } catch {
+            print("Failed to remove country: \(error.localizedDescription)")
+        }
+    }
+
+    func loadStoredCountries() {
+        guard let context = modelContext else { return }
+
+        let fetch = FetchDescriptor<CDCountry>()
+        if let stored = try? context.fetch(fetch) {
+            self.countries = stored.map { $0.toModel() }
+        }
     }
 }

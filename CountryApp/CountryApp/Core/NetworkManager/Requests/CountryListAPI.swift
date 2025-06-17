@@ -7,7 +7,7 @@
 
 import Foundation
 
-let API_URL = "https://restcountries.com/v3.1/name/%@?fields=cca3,name,flags,flag,currencies,latlng,capital"
+let API_URL = "https://restcountries.com/v3.1/name/%@?fields=cca3,cca2,name,flags,flag,currencies,latlng,capital"
 
 
 enum CouontryListAPI {
