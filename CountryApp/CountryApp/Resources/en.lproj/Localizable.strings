@@ -1,0 +1,34 @@
+/* 
+  Localizable.strings
+  CountryApp
+
+  Created by Tapan on 16/06/25.
+  
+*/
+
+/// API Errors
+"invalidURL" = "Invalid URL.";
+"invalidResponse" = "Invalid response from server.";
+"decodingError" = "Unable to decode the response.";
+"dataNotFound" = "No countries found for the given search criteria. Please try again with different keywords.";
+"serverError" = "Server Error";
+"unknownError" = "Unknown Error";
+
+/// List View
+
+"searchBarPlaceholder" = "Search a country to add";
+"loadingText" = "Loading...";
+"noDataFound" = "No Data Found!, Please search a country and add it your list.";
+"searchResults" = "Search Results";
+"yourCountries" = "Your Countries";
+"countryListTitle" = "Countries";
+"confirmDeletion" = "Confirm Deletion";
+"removeCountryError" = "Are you sure you want to remove this country?";
+"delete" = "Delete";
+"cancel" = "Cancel";
+"limitReached" = "Limit Reached";
+"ok" = "OK";
+"countryLimitAlert" = "You can only add up to 5 countries.";
+"capitalName" = "Capital:";
+"currencyName" = "Currency:";
+"correctText" = "✓";
