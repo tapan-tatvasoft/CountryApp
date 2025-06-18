@@ -29,3 +29,6 @@
 "limitReached" = "Limit Reached";
 "ok" = "OK";
 "countryLimitAlert" = "You can only add up to 5 countries.";
+"capitalName" = "Capital:";
+"currencyName" = "Currency:";
+"correctText" = "✓";

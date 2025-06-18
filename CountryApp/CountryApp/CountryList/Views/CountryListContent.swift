@@ -35,7 +35,7 @@ struct CountryListContent: View {
                     Image(systemName: SystemIcons.trash)
                     .foregroundColor(.red)
                 } else if showAddButton {
-                    Text(CountryListView.correctText)
+                    Text(localizeString("correctText"))
                     .foregroundColor(.gray)
                 } else {
                     Image(systemName: SystemIcons.plusCircleFill)

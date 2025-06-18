@@ -35,7 +35,6 @@ extension CountryDetailView {
     private var mainView: some View {
         VStack(spacing: ConstantsValue.zeroSpacing) {
             // MARK: Header
-       //     headerView
             WebImageView(
                 urlString: country.bestFlagURL,
                 placeholderImageName: SystemIcons.photo,
@@ -53,14 +52,14 @@ extension CountryDetailView {
             countryDetailView(with: country.name.official,
                               country.name.common)
             Divider()
-            countryDetailView(with: DetailView.capitalName,
+            countryDetailView(with: localizeString("capitalName"),
                               country.capital?[0] ?? "N/A")
             Divider()
             if let currency = country.currencies?.first {
-                countryDetailView(with: DetailView.currencyName,
+                countryDetailView(with: localizeString("currencyName"),
                                   "\(currency.value.name) (\(currency.key))")
             } else {
-                countryDetailView(with: DetailView.currencyName,
+                countryDetailView(with: localizeString("currencyName"),
                                   "N/A")
             }
             Spacer()

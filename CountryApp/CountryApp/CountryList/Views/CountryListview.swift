@@ -96,7 +96,9 @@ struct CountryListview: View {
                     showDeleteButton: false,
                     onTap: {
                         if viewModel.countries.count < 5 {
-                            viewModel.addCountry(country)
+                            if !viewModel.countries.contains(where: { $0.id == country.id }) {
+                                viewModel.addCountry(country)
+                            }
                         } else {
                             activeAlert = .countryLimit
                         }
