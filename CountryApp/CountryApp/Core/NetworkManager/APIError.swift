@@ -18,7 +18,7 @@ enum APIError: Error, LocalizedError {
     var errorDescription: String? {
         switch self {
         case .invalidURL:
-            return localizeString("Invalid URL")
+            return localizeString("invalidURL")
         case .invalidResponse:
             return localizeString("invalidResponse")
         case .decodingFailed:

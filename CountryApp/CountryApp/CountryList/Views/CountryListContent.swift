@@ -18,7 +18,7 @@ struct CountryListContent: View {
             
             WebImageView(
                 urlString: country.bestFlagURL,
-                placeholderImageName: "photo",
+                placeholderImageName: SystemIcons.photo,
                 width: 64,
                 height: 32
             )
@@ -32,13 +32,13 @@ struct CountryListContent: View {
             
             Group {
                 if showDeleteButton {
-                    Image(systemName: "trash")
+                    Image(systemName: SystemIcons.trash)
                     .foregroundColor(.red)
                 } else if showAddButton {
-                    Text("✓")
+                    Text(CountryListView.correctText)
                     .foregroundColor(.gray)
                 } else {
-                    Image(systemName: "plus.circle.fill")
+                    Image(systemName: SystemIcons.plusCircleFill)
                     .foregroundColor(.blue)
                 }
             }

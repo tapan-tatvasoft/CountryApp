@@ -6,7 +6,6 @@
 
 import SwiftUI
 
-import SwiftUI
 
 struct CountryListview: View {
     
@@ -14,8 +13,8 @@ struct CountryListview: View {
     @State private var selectedCountry: Country?
     @State private var showDetails = false
     @State private var countryToDelete: Country?
-    @State private var showDeleteConfirmation = false
-    
+    @State private var activeAlert: ActiveAlert?
+
     var body: some View {
         NavigationStack {
             VStack {
@@ -58,22 +57,31 @@ struct CountryListview: View {
                     CountryDetailView(country: selected)
                 }
             }
-            // Confirmation Alert
-            .alert(isPresented: $showDeleteConfirmation) {
-                Alert(
-                    title: Text("Confirm Deletion"),
-                    message: Text("Are you sure you want to remove this country?"),
-                    primaryButton: .destructive(Text("Delete")) {
-                        if let country = countryToDelete,
-                           let index = viewModel.countries.firstIndex(where: { $0.id == country.id }) {
-                            viewModel.removeCountry(at: IndexSet(integer: index))
+            .alert(item: $activeAlert) { alertType in
+                switch alertType {
+                case .deleteConfirmation:
+                    return Alert(
+                        title: Text(localizeString("confirmDeletion")),
+                        message: Text(localizeString("removeCountryError")),
+                        primaryButton: .destructive(Text(localizeString("delete"))) {
+                            if let country = countryToDelete,
+                               let index = viewModel.countries.firstIndex(where: { $0.id == country.id }) {
+                                viewModel.removeCountry(at: IndexSet(integer: index))
+                            }
+                            countryToDelete = nil
+                        },
+                        secondaryButton: .cancel {
+                            countryToDelete = nil
                         }
-                        countryToDelete = nil
-                    },
-                    secondaryButton: .cancel {
-                        countryToDelete = nil
-                    }
-                )
+                    )
+
+                case .countryLimit:
+                    return Alert(
+                        title: Text(localizeString("limitReached")),
+                        message: Text(localizeString("countryLimitAlert")),
+                        dismissButton: .default(Text(localizeString("ok")))
+                    )
+                }
             }
         }
     }
@@ -87,7 +95,11 @@ struct CountryListview: View {
                     showAddButton: viewModel.countries.contains(where: { $0.id == country.id }),
                     showDeleteButton: false,
                     onTap: {
-                        viewModel.addCountry(country)
+                        if viewModel.countries.count < 5 {
+                            viewModel.addCountry(country)
+                        } else {
+                            activeAlert = .countryLimit
+                        }
                     }
                 )
                 
@@ -111,7 +123,7 @@ struct CountryListview: View {
                     showDeleteButton: true,
                     onTap: {
                         countryToDelete = country
-                        showDeleteConfirmation = true
+                        activeAlert = .deleteConfirmation
                     }
                 )
                 
@@ -131,3 +143,11 @@ struct CountryListview: View {
     CountryListview(viewModel: viewModel)
 }
 
+extension ActiveAlert: Identifiable {
+    var id: Int {
+        switch self {
+        case .deleteConfirmation: return 0
+        case .countryLimit: return 1
+        }
+    }
+}

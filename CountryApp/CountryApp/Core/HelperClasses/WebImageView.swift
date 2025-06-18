@@ -8,9 +8,6 @@
 import SwiftUI
 import SDWebImageSwiftUI
 
-import SwiftUI
-import SDWebImageSwiftUI
-
 struct WebImageView: View {
     let urlString: String?
     let placeholderImageName: String

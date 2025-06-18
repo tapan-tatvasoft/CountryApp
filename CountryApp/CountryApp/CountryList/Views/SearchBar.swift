@@ -21,7 +21,7 @@ struct SearchBar: View {
                 .cornerRadius(8)
                 .overlay(
                     HStack {
-                        Image(systemName: "magnifyingglass")
+                        Image(systemName: SystemIcons.magnifyingglass)
                             .foregroundColor(.gray)
                             .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
                             .padding(.leading, 8)
@@ -30,7 +30,7 @@ struct SearchBar: View {
                             Button(action: {
                                 self.text = ""
                             }) {
-                                Image(systemName: "xmark.circle.fill")
+                                Image(systemName: SystemIcons.xmarkCircleFill)
                                     .foregroundColor(.gray)
                                     .padding(.trailing, 8)
                             }
@@ -42,7 +42,7 @@ struct SearchBar: View {
                 }
 
             if isEditing {
-                Button("Cancel") {
+                Button(localizeString("cancel")) {
                     isEditing = false
                     text = ""
                     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)

@@ -7,33 +7,6 @@
 
 import SwiftUI
 
-extension String {
-    
-    enum SelectedCountries {
-        static let navigationTitle = "Countries"
-        static let headerTitle = "Selected Countries"
-        static let searchBtnTitle = "Search Country"
-        static let progressTitle = "Fetching location…"
-        static let nocountriesAdded = "No countries added yet."
-        static let noInternetConnection = "You are not connected to the internet. Please check your connection."
-        static let tryAgain = "Try again"
-    }
-    
-    enum DetailView {
-        static let navigationTitle = "Country Details"
-        static let countryName = "Country Name:"
-        static let capitalName = "Capital:"
-        static let currencyName = "Currency:"
-    }
-    
-    enum CountrySearchView {
-        static let navigationTitle = "Country Search"
-        static let searchForACountry = "Search for a country"
-        static let noResult = "No results found \n Please try a different search"
-    }
-}
-
-
 struct CountryDetailView: View {
     
     let country: Country
@@ -65,7 +38,7 @@ extension CountryDetailView {
        //     headerView
             WebImageView(
                 urlString: country.bestFlagURL,
-                placeholderImageName: "photo",
+                placeholderImageName: SystemIcons.photo,
                 width: 200,
                 height: 100
             )
@@ -80,14 +53,14 @@ extension CountryDetailView {
             countryDetailView(with: country.name.official,
                               country.name.common)
             Divider()
-            countryDetailView(with: String.DetailView.capitalName,
+            countryDetailView(with: DetailView.capitalName,
                               country.capital?[0] ?? "N/A")
             Divider()
             if let currency = country.currencies?.first {
-                countryDetailView(with: String.DetailView.currencyName,
+                countryDetailView(with: DetailView.currencyName,
                                   "\(currency.value.name) (\(currency.key))")
             } else {
-                countryDetailView(with: String.DetailView.currencyName,
+                countryDetailView(with: DetailView.currencyName,
                                   "N/A")
             }
             Spacer()

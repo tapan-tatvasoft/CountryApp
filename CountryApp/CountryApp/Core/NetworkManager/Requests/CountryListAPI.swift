@@ -7,17 +7,15 @@
 
 import Foundation
 
-let API_URL = "https://restcountries.com/v3.1/name/%@?fields=cca3,cca2,name,flags,flag,currencies,latlng,capital"
-
-
 enum CouontryListAPI {
     static func getCountries(searchName: String) throws -> PreparedRequest<[Country]> {
         
-        guard let url = URL(string: String(format: API_URL, searchName)) else {
-            throw APIError.invalidURL
-        }
-
-        var request = URLRequest(url: url)
+        let endpoint = CountryEndpoint.searchCountry(
+            name: searchName,
+            fields: ["cca3", "cca2", "name", "flags", "flag", "currencies", "latlng", "capital"]
+        )
+        
+        var request = URLRequest(url: endpoint.url)
         request.httpMethod = HTTPMethod.GET.rawValue
         request.setValue("application/json", forHTTPHeaderField: "Accept")
 

@@ -19,7 +19,7 @@ struct CountryAppApp: App {
     @StateObject private var locationManager = LocationManager()
     @StateObject private var viewModel: CountryListViewModel
     
-    // 💾 SwiftData container
+    // SwiftData container
     let modelContainer: ModelContainer
 
     init() {
@@ -36,7 +36,7 @@ struct CountryAppApp: App {
             modelContainer = try ModelContainer(for: CDCountry.self)
             vm.setContext(modelContainer.mainContext)
         } catch {
-            fatalError("⚠️ Failed to initialize ModelContainer: \(error)")
+            fatalError("Failed to initialize ModelContainer: \(error)")
         }
         
         // Register SVG support

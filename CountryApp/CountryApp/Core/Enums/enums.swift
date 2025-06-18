@@ -5,6 +5,10 @@
 //  Created by Tapan on 16/06/25.
 //
 
+enum APIURLS {
+    static let baseURL = "https://restcountries.com/v3.1/"
+}
+
 enum SelectedCountries {
     static let navigationTitle = "Countries"
     static let headerTitle = "Selected Countries"
@@ -26,4 +30,21 @@ enum CountrySearchView {
     static let navigationTitle = "Country Search"
     static let searchForACountry = "Search for a country"
     static let noResult = "No results found \n Please try a different search"
+}
+
+enum CountryListView {
+    static let correctText = "✓"
+}
+
+enum SystemIcons {
+    static let photo = "photo"
+    static let trash = "trash"
+    static let plusCircleFill = "plus.circle.fill"
+    static let magnifyingglass = "magnifyingglass"
+    static let xmarkCircleFill = "xmark.circle.fill"
+}
+
+enum ActiveAlert {
+    case deleteConfirmation
+    case countryLimit
 }

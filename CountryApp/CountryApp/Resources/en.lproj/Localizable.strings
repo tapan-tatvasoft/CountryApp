@@ -22,4 +22,10 @@
 "searchResults" = "Search Results";
 "yourCountries" = "Your Countries";
 "countryListTitle" = "Countries";
-
+"confirmDeletion" = "Confirm Deletion";
+"removeCountryError" = "Are you sure you want to remove this country?";
+"delete" = "Delete";
+"cancel" = "Cancel";
+"limitReached" = "Limit Reached";
+"ok" = "OK";
+"countryLimitAlert" = "You can only add up to 5 countries.";
